@@ -17,7 +17,7 @@ function UserForm() {
     event.preventDefault();
 
     // Calculate the sum of the three input values
-    const sumValue = (bw * bwCst * patientHCT + emv * 50) / (emv + bwCst * bw);
+    const sumValue = (parseFloat(bw) * parseFloat(bwCst) * parseFloat(patientHCT) + parseFloat(emv) * 0.5) / (parseFloat(emv) + parseFloat(bwCst) * parseFloat(bw));
 
     // Update the sum state variable
     setSum(sumValue);
@@ -27,7 +27,7 @@ function UserForm() {
     event.preventDefault();
 
     // Calculate the sum of the three input values
-    const sumValueA = (bwA * bwCstA + emvA) * finalHCTA - bwA * bwCstA * patientHCTA / 50;
+    const sumValueA = ((parseFloat(bwA) * parseFloat(bwCstA) + parseFloat(emvA)) * parseFloat(finalHCTA) - parseFloat(bwA) * parseFloat(bwCstA) * parseFloat(patientHCTA)) / 0.5;
 
     // Update the sum state variable
     setSumA(sumValueA);
@@ -96,7 +96,7 @@ function UserForm() {
         </label>
         <br />
         <label>
-          Emmo Volume:
+          Ecmo Volume:
           <input
             type="text"
             value={emvA}
@@ -125,6 +125,12 @@ function UserForm() {
         <button type="submit">Submit</button>
       </form>
       <p>Blood Volume: {sumA}</p>
+      {/* <p>bwA: {bwA}</p>
+      <p>bwCstA: {bwCstA}</p>
+      <p>setPatientHCTA: {patientHCTA}</p>
+      <p>emvA: {emvA}</p>
+      <p>finalHCTA: {finalHCTA}</p>
+      <p>Blood Volume: {bwA * bwCstA + emvA}</p> */}
     </div>
   );
 }
