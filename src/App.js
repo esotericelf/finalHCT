@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 
 function UserForm() {
   const [bw, setBW] = useState('');
+  const [emv, setEmv] = useState('');
   const [patientHCT, setPatientHCT] = useState('');
   const [bwCst, setbwCst] = useState('');
   const [sum, setSum] = useState(0);
   const [bwA, setBWA] = useState('');
+  const [emvA, setEmvA] = useState('');
   const [patientHCTA, setPatientHCTA] = useState('');
   const [bwCstA, setbwCstA] = useState('');
   const [finalHCTA, setfinalHCTA] = useState();
@@ -15,7 +17,7 @@ function UserForm() {
     event.preventDefault();
 
     // Calculate the sum of the three input values
-    const sumValue = (bw * bwCst * patientHCT + 300 * 0.5) / (300 + bwCst * bw);
+    const sumValue = (bw * bwCst * patientHCT + emv * 0.5) / (emv + bwCst * bw);
 
     // Update the sum state variable
     setSum(sumValue);
@@ -25,7 +27,7 @@ function UserForm() {
     event.preventDefault();
 
     // Calculate the sum of the three input values
-    const sumValueA = (bwA * bwCstA * patientHCTA - bwA * bwCstA * finalHCTA) / (finalHCTA - 0.5);
+    const sumValueA = (bwA * bwCstA + emvA) * finalHCTA - bwA * bwCstA * patientHCTA / 0.5;
 
     // Update the sum state variable
     setSumA(sumValueA);
@@ -49,6 +51,15 @@ function UserForm() {
             type="text"
             value={patientHCT}
             onChange={(event) => setPatientHCT(event.target.value)}
+          />
+        </label>
+        <br />
+        <label>
+          Emmo Volume:
+          <input
+            type="text"
+            value={emv}
+            onChange={(event) => setEmv(event.target.value)}
           />
         </label>
         <br />
@@ -81,6 +92,15 @@ function UserForm() {
             type="text"
             value={patientHCTA}
             onChange={(event) => setPatientHCTA(event.target.value)}
+          />
+        </label>
+        <br />
+        <label>
+          Emmo Volume:
+          <input
+            type="text"
+            value={emvA}
+            onChange={(event) => setEmvA(event.target.value)}
           />
         </label>
         <br />
