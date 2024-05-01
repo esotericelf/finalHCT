@@ -17,7 +17,7 @@ function UserForm() {
     event.preventDefault();
 
     // Calculate the sum of the three input values
-    const sumValue = (bw * bwCst * patientHCT + emv * 0.5) / (emv + bwCst * bw);
+    const sumValue = (bw * bwCst * patientHCT + emv * 50) / (emv + bwCst * bw);
 
     // Update the sum state variable
     setSum(sumValue);
@@ -27,7 +27,7 @@ function UserForm() {
     event.preventDefault();
 
     // Calculate the sum of the three input values
-    const sumValueA = (bwA * bwCstA + emvA) * finalHCTA - bwA * bwCstA * patientHCTA / 0.5;
+    const sumValueA = (bwA * bwCstA + emvA) * finalHCTA - bwA * bwCstA * patientHCTA / 50;
 
     // Update the sum state variable
     setSumA(sumValueA);
