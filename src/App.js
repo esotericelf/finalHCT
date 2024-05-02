@@ -37,100 +37,103 @@ function UserForm() {
     <div>
       <form onSubmit={handleSubmit}>
         <label>
-          BW:
           <input
             type="text"
             value={bw}
             onChange={(event) => setBW(event.target.value)}
+            class="input"
+            placeholder='BW'
           />
         </label>
         <br />
         <label>
-          Patient HCT:
           <input
             type="text"
             value={patientHCT}
             onChange={(event) => setPatientHCT(event.target.value)}
+            class="input"
+            placeholder='Patient HCT'
           />
         </label>
         <br />
         <label>
-          Ecmo Volume:
           <input
             type="text"
             value={emv}
             onChange={(event) => setEmv(event.target.value)}
+            class="input"
+            placeholder='Ecmo Volume'
           />
         </label>
         <br />
         <label>
-          Body Weight Constant:
           <input
             type="text"
             value={bwCst}
             onChange={(event) => setbwCst(event.target.value)}
+            class="input"
+            placeholder='Body Weight Constant'
           />
         </label>
         <br />
-        <button type="submit">Submit</button>
+        <button type="submit" class="btn">Submit</button>
       </form>
-      <p>Final HCT: {sum}</p>
+      <p class="gradient-bg">Final HCT: {sum}</p>
       <br></br>
       <form onSubmit={handleSubmitA}>
         <label>
-          BW:
           <input
             type="text"
             value={bwA}
             onChange={(event) => setBWA(event.target.value)}
+            class="input"
+            placeholder='BW'
           />
         </label>
         <br />
         <label>
-          Patient HCT:
           <input
             type="text"
             value={patientHCTA}
             onChange={(event) => setPatientHCTA(event.target.value)}
+            class="input"
+            placeholder='Patient HCT'
           />
         </label>
         <br />
         <label>
-          Ecmo Volume:
           <input
             type="text"
             value={emvA}
             onChange={(event) => setEmvA(event.target.value)}
+            class="input"
+            placeholder='Ecmo Volume'
           />
         </label>
         <br />
         <label>
-          Body Weight Constant:
           <input
             type="text"
             value={bwCstA}
             onChange={(event) => setbwCstA(event.target.value)}
+            class="input"
+            placeholder='Body Weight Constant'
           />
         </label>
         <br />
         <label>
-          Final HCT:
           <input
             type="text"
             value={finalHCTA}
             onChange={(event) => setfinalHCTA(event.target.value)}
+            class="input"
+            placeholder='Final HCT'
           />
         </label>
         <br />
-        <button type="submit">Submit</button>
+        <button type="submit" class="btn">Submit</button>
       </form>
-      <p>Blood Volume: {sumA}</p>
-      {/* <p>bwA: {bwA}</p>
-      <p>bwCstA: {bwCstA}</p>
-      <p>setPatientHCTA: {patientHCTA}</p>
-      <p>emvA: {emvA}</p>
-      <p>finalHCTA: {finalHCTA}</p>
-      <p>Blood Volume: {bwA * bwCstA + emvA}</p> */}
+      <p class="gradient-bg">Blood Volume: {sumA}</p>
     </div>
   );
 }
