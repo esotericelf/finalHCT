@@ -16,11 +16,16 @@ function UserForm() {
   const handleSubmit = (event) => {
     event.preventDefault();
 
+
     // Calculate the sum of the three input values
     const sumValue = (parseFloat(bw) * parseFloat(bwCst) * parseFloat(patientHCT) + parseFloat(emv) * 0.5) / (parseFloat(emv) + parseFloat(bwCst) * parseFloat(bw));
 
-    // Update the sum state variable
-    setSum(sumValue);
+    if (isNaN(sumValue)) {
+      alert("Invalid Input")
+    } else {
+      // Update the sum state variable
+      setSum(sumValue);
+    }
   };
 
   const handleSubmitA = (event) => {
