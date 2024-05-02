@@ -43,7 +43,7 @@ function UserForm() {
       <form onSubmit={handleSubmit}>
         <label>
           <input
-            type="text"
+            type="number"
             value={bw}
             onChange={(event) => setBW(event.target.value)}
             class="input"
@@ -53,7 +53,7 @@ function UserForm() {
         <br />
         <label>
           <input
-            type="text"
+            type="number"
             value={patientHCT}
             onChange={(event) => setPatientHCT(event.target.value)}
             class="input"
@@ -63,7 +63,7 @@ function UserForm() {
         <br />
         <label>
           <input
-            type="text"
+            type="number"
             value={emv}
             onChange={(event) => setEmv(event.target.value)}
             class="input"
@@ -73,7 +73,7 @@ function UserForm() {
         <br />
         <label>
           <input
-            type="text"
+            type="number"
             value={bwCst}
             onChange={(event) => setbwCst(event.target.value)}
             class="input"
@@ -88,7 +88,7 @@ function UserForm() {
       <form onSubmit={handleSubmitA}>
         <label>
           <input
-            type="text"
+            type="number"
             value={bwA}
             onChange={(event) => setBWA(event.target.value)}
             class="input"
@@ -98,7 +98,7 @@ function UserForm() {
         <br />
         <label>
           <input
-            type="text"
+            type="number"
             value={patientHCTA}
             onChange={(event) => setPatientHCTA(event.target.value)}
             class="input"
@@ -108,7 +108,7 @@ function UserForm() {
         <br />
         <label>
           <input
-            type="text"
+            type="number"
             value={emvA}
             onChange={(event) => setEmvA(event.target.value)}
             class="input"
@@ -118,7 +118,7 @@ function UserForm() {
         <br />
         <label>
           <input
-            type="text"
+            type="number"
             value={bwCstA}
             onChange={(event) => setbwCstA(event.target.value)}
             class="input"
@@ -128,7 +128,7 @@ function UserForm() {
         <br />
         <label>
           <input
-            type="text"
+            type="number"
             value={finalHCTA}
             onChange={(event) => setfinalHCTA(event.target.value)}
             class="input"
