@@ -40,6 +40,7 @@ function UserForm() {
 
   return (
     <div>
+      <h1> Calculation of Final HCT </h1>
       <form onSubmit={handleSubmit}>
         <label>
           <input
@@ -85,6 +86,7 @@ function UserForm() {
       </form>
       <p class="gradient-bg">Final HCT: {sum}</p>
       <br></br>
+      <h1> Calculation of Blood Volume </h1>
       <form onSubmit={handleSubmitA}>
         <label>
           <input
