@@ -10,7 +10,7 @@ function UserForm() {
   const [emvA, setEmvA] = useState('');
   const [patientHCTA, setPatientHCTA] = useState('');
   const [bwCstA, setbwCstA] = useState('');
-  const [finalHCTA, setfinalHCTA] = useState();
+  const [finalHCTA, setfinalHCTA] = useState('');
   const [sumA, setSumA] = useState(0);
 
   const handleSubmit = (event) => {
