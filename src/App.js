@@ -9,6 +9,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Page1 />} />
+        <Route path="/final-hct" element={<Page1 />} />
         <Route path="/donor-blood-volume" element={<Page2 />} />
       </Routes>
     </BrowserRouter>
