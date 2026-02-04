@@ -33,17 +33,36 @@ function FormulaDisplay({ formulas, pageTitle }) {
               {formula.variables && (
                 <div className="formula-variables">
                   <h5>Variables:</h5>
-                  <ul className="variable-list">
+                  <div className="variable-grid">
                     {formula.variables.map((variable, idx) => (
-                      <li key={idx}>
-                        <strong><InlineMath math={variable.symbol} /></strong> = {variable.name}
-                        {variable.abbreviation && <span className="abbreviation"> ({variable.abbreviation})</span>}
-                        {variable.range && <span className="range"> - Range: {variable.range}</span>}
-                        {variable.unit && <span className="unit"> - Unit: {variable.unit}</span>}
-                        {variable.footnote && <sup className="footnote">{variable.footnote}</sup>}
-                      </li>
+                      <div key={idx} className="variable-card">
+                        <div className="variable-header">
+                          <span className="variable-symbol"><InlineMath math={variable.symbol} /></span>
+                          <span className="variable-name">{variable.name}</span>
+                        </div>
+                        <div className="variable-details">
+                          {variable.abbreviation && (
+                            <div className="variable-detail-item">
+                              <span className="detail-label">Abbr:</span>
+                              <span className="abbreviation">{variable.abbreviation}</span>
+                            </div>
+                          )}
+                          {variable.unit && (
+                            <div className="variable-detail-item">
+                              <span className="detail-label">Unit:</span>
+                              <span className="unit">{variable.unit}</span>
+                            </div>
+                          )}
+                          {variable.range && (
+                            <div className="variable-detail-item full-width">
+                              <span className="detail-label">Range:</span>
+                              <span className="range">{variable.range}</span>
+                            </div>
+                          )}
+                        </div>
+                      </div>
                     ))}
-                  </ul>
+                  </div>
                 </div>
               )}
               {formula.notes && (
