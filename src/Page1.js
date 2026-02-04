@@ -95,7 +95,7 @@ function Page1() {
         resultFormat="percentage"
       />
       <div className="navigation-buttons">
-        <button onClick={() => navigate('/page2')} className="nav-btn next-btn">
+        <button onClick={() => navigate('/donor-blood-volume')} className="nav-btn next-btn">
           Donar Blood Volume Calculations →
         </button>
       </div>

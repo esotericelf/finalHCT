@@ -122,7 +122,7 @@ function Page2() {
         resultUnit="mL"
       />
       <div className="navigation-buttons">
-        <button onClick={() => navigate('/page1')} className="nav-btn prev-btn">
+        <button onClick={() => navigate('/final-hct')} className="nav-btn prev-btn">
           ← Calculation of Final HCT
         </button>
       </div>

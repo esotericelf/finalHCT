@@ -8,9 +8,9 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Navigate to="/page1" replace />} />
-        <Route path="/page1" element={<Page1 />} />
-        <Route path="/page2" element={<Page2 />} />
+        <Route path="/" element={<Navigate to="/final-hct" replace />} />
+        <Route path="/final-hct" element={<Page1 />} />
+        <Route path="/donor-blood-volume" element={<Page2 />} />
       </Routes>
     </BrowserRouter>
   );
