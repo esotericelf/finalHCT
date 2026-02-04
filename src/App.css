@@ -1351,3 +1351,230 @@
     color: #a0aec0;
   }
 }
+
+/* Theme Selector Styles */
+.theme-toggle-btn {
+  position: fixed;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1000;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(168, 192, 255, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary-color, #a8c0ff);
+  transition: all 0.3s ease;
+  padding: 0;
+}
+
+.theme-toggle-btn:hover {
+  background: rgba(255, 255, 255, 1);
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  border-color: var(--primary-color, #a8c0ff);
+}
+
+.theme-toggle-btn:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+.theme-sidebar {
+  position: fixed;
+  right: -320px;
+  top: 0;
+  width: 300px;
+  height: 100vh;
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(20px);
+  box-shadow: -4px 0 20px rgba(0, 0, 0, 0.15);
+  z-index: 999;
+  transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow-y: auto;
+  border-left: 1px solid rgba(168, 192, 255, 0.2);
+}
+
+.theme-sidebar.open {
+  right: 0;
+}
+
+.theme-sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid rgba(168, 192, 255, 0.2);
+  background: linear-gradient(135deg, rgba(168, 192, 255, 0.1) 0%, rgba(184, 168, 255, 0.1) 100%);
+}
+
+.theme-sidebar-header h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  background: var(--primary-gradient, linear-gradient(135deg, #a8c0ff 0%, #b8a8ff 100%));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.theme-close-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(168, 192, 255, 0.2);
+  color: var(--primary-color, #a8c0ff);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  transition: all 0.2s ease;
+  padding: 0;
+}
+
+.theme-close-btn:hover {
+  background: rgba(168, 192, 255, 0.3);
+  transform: scale(1.1);
+}
+
+.theme-list {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.theme-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border: 2px solid rgba(168, 192, 255, 0.2);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.theme-option:hover {
+  border-color: var(--primary-color, #a8c0ff);
+  background: rgba(255, 255, 255, 1);
+  transform: translateX(-4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.theme-option.active {
+  border-color: var(--primary-color, #a8c0ff);
+  background: linear-gradient(135deg, rgba(168, 192, 255, 0.15) 0%, rgba(184, 168, 255, 0.15) 100%);
+  box-shadow: 0 4px 12px rgba(168, 192, 255, 0.3);
+}
+
+.theme-preview {
+  display: flex;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.theme-color-dot {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.theme-name {
+  flex: 1;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-primary, #2d3748);
+}
+
+.theme-check {
+  color: var(--primary-color, #a8c0ff);
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.theme-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(2px);
+  z-index: 998;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Responsive Theme Selector */
+@media (max-width: 768px) {
+  .theme-toggle-btn {
+    right: 15px;
+    width: 45px;
+    height: 45px;
+  }
+
+  .theme-sidebar {
+    width: 280px;
+    right: -280px;
+  }
+
+  .theme-sidebar-header {
+    padding: 16px;
+  }
+
+  .theme-sidebar-header h3 {
+    font-size: 1.1rem;
+  }
+
+  .theme-list {
+    padding: 16px;
+    gap: 10px;
+  }
+
+  .theme-option {
+    padding: 12px 14px;
+  }
+
+  .theme-color-dot {
+    width: 20px;
+    height: 20px;
+  }
+
+  .theme-name {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .theme-toggle-btn {
+    right: 10px;
+    width: 40px;
+    height: 40px;
+  }
+
+  .theme-sidebar {
+    width: 260px;
+    right: -260px;
+  }
+}

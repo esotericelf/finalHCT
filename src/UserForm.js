@@ -2,8 +2,11 @@ import React, { useState } from 'react';
 import AlertBox from './AlertBox';
 import './App.css';
 
-function UserForm({ title, inputs, calculateSum, resultLabel, autoCalculate, resultFormat, resultUnit }) {
-    const [values, setValues] = useState({});
+function UserForm({ title, inputs, calculateSum, resultLabel, autoCalculate, resultFormat, resultUnit, initialValues = {} }) {
+    const [values, setValues] = useState(() => {
+        // Initialize with initialValues if provided
+        return initialValues || {};
+    });
     const [result, setResult] = useState(0);
     const [manualOverrides, setManualOverrides] = useState({});
     const [alert, setAlert] = useState({ isOpen: false, message: '', title: '' });

@@ -96,13 +96,14 @@ function Page2() {
       />
       <UserForm
         title="Donor Blood Volume Calculation"
+        initialValues={{ donorHCTA: '0.5' }}
         inputs={[
           { name: 'bwA', placeholder: 'Body Weight (kg)' },
           { name: 'patientHCTA', placeholder: 'Patient HCT (0-1)' },
           { name: 'emvA', placeholder: 'ECMO Volume (mL)' },
           { name: 'bwCstA', placeholder: 'Body Weight Constant (mL/kg)' },
           { name: 'finalHCTA', placeholder: 'Desired HCT / Final HCT (0-1)' },
-          { name: 'donorHCTA', placeholder: 'HCT of Donor (0-1) - Default: 0.5' }
+          { name: 'donorHCTA', placeholder: 'HCT of Donor (0-1)' }
         ]}
         autoCalculate={{
           triggerField: 'bwA',
