@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import UserForm from './UserForm';
 import FormulaDisplay from './FormulaDisplay';
+import MedicalDisclaimer from './MedicalDisclaimer';
 import './App.css';
 
 function Page1() {
@@ -77,7 +78,7 @@ function Page1() {
           { name: 'bw', placeholder: 'Body Weight (kg)' },
           { name: 'patientHCT', placeholder: 'Patient HCT (0-1)' },
           { name: 'emv', placeholder: 'ECMO Volume (mL)' },
-          { name: 'bwCst', placeholder: 'Body Weight Constant (mL/kg) - Auto-calculated' }
+          { name: 'bwCst', placeholder: 'Body Weight Constant (mL/kg)' }
         ]}
         autoCalculate={{
           triggerField: 'bw',
@@ -99,6 +100,7 @@ function Page1() {
           Donar Blood Volume Calculations →
         </button>
       </div>
+      <MedicalDisclaimer />
     </div>
   );
 }

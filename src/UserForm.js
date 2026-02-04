@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
+import AlertBox from './AlertBox';
 import './App.css';
 
 function UserForm({ title, inputs, calculateSum, resultLabel, autoCalculate, resultFormat, resultUnit }) {
     const [values, setValues] = useState({});
     const [result, setResult] = useState(0);
     const [manualOverrides, setManualOverrides] = useState({});
+    const [alert, setAlert] = useState({ isOpen: false, message: '', title: '' });
+    const [hoveredField, setHoveredField] = useState(null);
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -35,11 +38,50 @@ function UserForm({ title, inputs, calculateSum, resultLabel, autoCalculate, res
         setValues(newValues);
     };
 
+    // Show alert
+    const showAlert = (title, message) => {
+        setAlert({ isOpen: true, title, message });
+    };
+
+    // Close alert
+    const closeAlert = () => {
+        setAlert({ isOpen: false, title: '', message: '' });
+    };
+
+    // Validate HCT values are between 0 and 1
+    const validateHCTValues = () => {
+        const hctFields = inputs.filter(input => {
+            const placeholder = input.placeholder || '';
+            return placeholder.includes('(0-1)') || placeholder.toLowerCase().includes('hct');
+        });
+
+        for (const field of hctFields) {
+            const value = parseFloat(values[field.name]);
+            if (values[field.name] && values[field.name] !== '') {
+                if (isNaN(value) || value < 0 || value > 1) {
+                    const fieldName = getFieldName(field.placeholder);
+                    showAlert(
+                        'Invalid HCT Value',
+                        `${fieldName} must be between 0 and 1.\n\nCurrent value: ${values[field.name]}\n\nPlease enter a value between 0 and 1.`
+                    );
+                    return false;
+                }
+            }
+        }
+        return true;
+    };
+
     const handleSubmit = (event) => {
         event.preventDefault();
+
+        // Validate HCT values first
+        if (!validateHCTValues()) {
+            return;
+        }
+
         const sumValue = calculateSum(values);
         if (isNaN(sumValue)) {
-            alert("Invalid Input");
+            showAlert('Invalid Input', 'Please check that all required fields are filled with valid numbers.');
         } else {
             setResult(sumValue);
         }
@@ -90,6 +132,48 @@ function UserForm({ title, inputs, calculateSum, resultLabel, autoCalculate, res
         return value.toFixed(2);
     };
 
+    // Check if field is body weight constant
+    const isBodyWeightConstant = (inputName, placeholder) => {
+        return placeholder && (
+            placeholder.toLowerCase().includes('body weight constant') ||
+            placeholder.toLowerCase().includes('bwc') ||
+            inputName === 'bwCst' ||
+            inputName === 'bwCstA'
+        );
+    };
+
+    // Get body weight constant logic text
+    const getBodyWeightConstantLogic = () => {
+        return (
+            <div className="bwc-logic-tooltip">
+                <div className="bwc-logic-title">Body Weight Constant Values:</div>
+                <div className="bwc-logic-list">
+                    <div className="bwc-logic-item">
+                        <span className="bwc-range">0 - 10 kg</span>
+                        <span className="bwc-arrow">→</span>
+                        <span className="bwc-value">85 mL/kg</span>
+                    </div>
+                    <div className="bwc-logic-item">
+                        <span className="bwc-range">11 - 20 kg</span>
+                        <span className="bwc-arrow">→</span>
+                        <span className="bwc-value">80 mL/kg</span>
+                    </div>
+                    <div className="bwc-logic-item">
+                        <span className="bwc-range">21 - 45 kg</span>
+                        <span className="bwc-arrow">→</span>
+                        <span className="bwc-value">75 mL/kg</span>
+                    </div>
+                    <div className="bwc-logic-item">
+                        <span className="bwc-range">&gt; 45 kg</span>
+                        <span className="bwc-arrow">→</span>
+                        <span className="bwc-value">70 mL/kg</span>
+                    </div>
+                </div>
+                <div className="bwc-logic-note">Auto-calculated based on body weight</div>
+            </div>
+        );
+    };
+
     return (
         <div className="container">
             <div className="form-header">
@@ -109,8 +193,15 @@ function UserForm({ title, inputs, calculateSum, resultLabel, autoCalculate, res
                     const unit = extractUnit(input.placeholder);
                     const hasValue = values[input.name] && values[input.name] !== '';
                     const fieldName = getFieldName(input.placeholder);
+                    const isBWC = isBodyWeightConstant(input.name, input.placeholder);
                     return (
-                        <div key={input.name} className="input-wrapper" data-has-value={hasValue}>
+                        <div
+                            key={input.name}
+                            className="input-wrapper"
+                            data-has-value={hasValue}
+                            onMouseEnter={() => isBWC && setHoveredField(input.name)}
+                            onMouseLeave={() => isBWC && setHoveredField(null)}
+                        >
                             <label className="input-label">
                                 <input
                                     type="number"
@@ -125,6 +216,11 @@ function UserForm({ title, inputs, calculateSum, resultLabel, autoCalculate, res
                                     <span className="input-unit">{unit}</span>
                                 )}
                                 <span className="input-helper-text">{fieldName}</span>
+                                {isBWC && hoveredField === input.name && (
+                                    <div className="bwc-floating-remark">
+                                        {getBodyWeightConstantLogic()}
+                                    </div>
+                                )}
                             </label>
                         </div>
                     );
@@ -132,6 +228,12 @@ function UserForm({ title, inputs, calculateSum, resultLabel, autoCalculate, res
                 <button type="submit" className="btn">Submit</button>
             </form>
             <p className="gradient-bg">{resultLabel}: {formatResult(result)}{resultUnit ? ` ${resultUnit}` : ''}</p>
+            <AlertBox
+                isOpen={alert.isOpen}
+                title={alert.title}
+                message={alert.message}
+                onClose={closeAlert}
+            />
         </div>
     );
 }

@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import UserForm from './UserForm';
 import FormulaDisplay from './FormulaDisplay';
+import MedicalDisclaimer from './MedicalDisclaimer';
 import './App.css';
 
 function Page2() {
@@ -99,7 +100,7 @@ function Page2() {
           { name: 'bwA', placeholder: 'Body Weight (kg)' },
           { name: 'patientHCTA', placeholder: 'Patient HCT (0-1)' },
           { name: 'emvA', placeholder: 'ECMO Volume (mL)' },
-          { name: 'bwCstA', placeholder: 'Body Weight Constant (mL/kg) - Auto-calculated' },
+          { name: 'bwCstA', placeholder: 'Body Weight Constant (mL/kg)' },
           { name: 'finalHCTA', placeholder: 'Desired HCT / Final HCT (0-1)' },
           { name: 'donorHCTA', placeholder: 'HCT of Donor (0-1) - Default: 0.5' }
         ]}
@@ -126,6 +127,7 @@ function Page2() {
           ← Calculation of Final HCT
         </button>
       </div>
+      <MedicalDisclaimer />
     </div>
   );
 }
