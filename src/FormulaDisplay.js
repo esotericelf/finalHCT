@@ -18,7 +18,7 @@ function FormulaDisplay({ formulas, pageTitle }) {
         className="formula-toggle-btn"
         aria-expanded={isOpen}
       >
-        {isOpen ? '▲ Hide Formulas' : '▼ Show Formulas'}
+        Formula <span className="formula-icon">{isOpen ? '▲' : '▼'}</span>
       </button>
 
       {isOpen && (

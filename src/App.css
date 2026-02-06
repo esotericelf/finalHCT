@@ -41,7 +41,7 @@
   max-width: 600px;
   width: 100%;
   margin: 0 auto;
-  padding: 40px 30px;
+  padding: 20px 30px 40px 30px;
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
   border-radius: 24px;
@@ -413,8 +413,8 @@
   position: relative;
   width: 100%;
   max-width: 600px;
-  margin: 0 auto 20px;
-  padding: 0 20px;
+  margin: 0 auto 10px;
+  padding: 0;
   z-index: 10;
 }
 
@@ -426,7 +426,7 @@
   background: linear-gradient(135deg, #b3e5fc 0%, #81d4fa 100%);
   color: #01579b;
   border: none;
-  border-radius: 12px 12px 0 0;
+  border-radius: 12px;
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: var(--shadow-md);
@@ -443,6 +443,13 @@
 
 .formula-toggle-btn:active {
   transform: translateY(0);
+}
+
+.formula-icon {
+  display: inline-block;
+  margin-left: 8px;
+  font-size: 0.9em;
+  vertical-align: middle;
 }
 
 .formula-content {
@@ -934,7 +941,7 @@
   }
 
   .container {
-    padding: 30px 24px;
+    padding: 20px 24px 30px 24px;
     border-radius: 20px;
     max-width: 100%;
   }
@@ -992,8 +999,12 @@
   }
 
   .formula-container {
-    padding: 0 15px;
-    margin-bottom: 15px;
+    padding: 0;
+    margin-bottom: 10px;
+  }
+
+  .formula-toggle-btn {
+    border-radius: 12px;
   }
 
   .formula-content {
@@ -1031,7 +1042,7 @@
   }
 
   .container {
-    padding: 24px 20px;
+    padding: 16px 20px 24px 20px;
     border-radius: 16px;
   }
 
@@ -1102,13 +1113,14 @@
   }
 
   .formula-container {
-    padding: 0 10px;
-    margin-bottom: 15px;
+    padding: 0;
+    margin-bottom: 10px;
   }
 
   .formula-toggle-btn {
     padding: 10px 18px;
     font-size: 0.85rem;
+    border-radius: 12px;
   }
 
   .formula-content {
@@ -1290,7 +1302,8 @@
 /* Extra Small Devices */
 @media (max-width: 360px) {
   .container {
-    padding: 20px 16px;
+    padding: 16px 16px 20px 16px;
+    border-radius: 16px;
   }
 
   .container h1 {

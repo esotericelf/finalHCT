@@ -1,5 +1,5 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useMemo } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import UserForm from './UserForm';
 import FormulaDisplay from './FormulaDisplay';
 import MedicalDisclaimer from './MedicalDisclaimer';
@@ -7,6 +7,47 @@ import './App.css';
 
 function Page2() {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // Get data from navigation state or localStorage
+  const page1Data = useMemo(() => {
+    // First try to get from navigation state
+    if (location.state) {
+      return location.state;
+    }
+    // Fallback to localStorage
+    const stored = localStorage.getItem('page1CalculationData');
+    if (stored) {
+      try {
+        return JSON.parse(stored);
+      } catch (e) {
+        return null;
+      }
+    }
+    return null;
+  }, [location.state]);
+
+  // Map Page1 data to Page2 initial values
+  const initialValues = useMemo(() => {
+    const values = {
+      donorHCTA: '0.5' // Default value
+    };
+
+    if (page1Data) {
+      // Map fields from Page1 to Page2 (convert all to strings for input fields)
+      if (page1Data.bw) values.bwA = String(page1Data.bw);
+      if (page1Data.patientHCT) values.patientHCTA = String(page1Data.patientHCT);
+      if (page1Data.emv) values.emvA = String(page1Data.emv);
+      if (page1Data.bwCst) values.bwCstA = String(page1Data.bwCst);
+      // The Final HCT result becomes the Desired HCT
+      if (page1Data.finalHCT !== undefined && page1Data.finalHCT !== null) {
+        // The finalHCT is already a decimal (0-1), just convert to string
+        values.finalHCTA = String(page1Data.finalHCT);
+      }
+    }
+
+    return values;
+  }, [page1Data]);
 
   // Function to calculate body weight constant based on body weight
   const calculateBodyWeightConstant = (bodyWeight) => {
@@ -96,7 +137,7 @@ function Page2() {
       />
       <UserForm
         title="Donor Blood Volume Calculation"
-        initialValues={{ donorHCTA: '0.5' }}
+        initialValues={initialValues}
         inputs={[
           { name: 'bwA', placeholder: 'Body Weight (kg)' },
           { name: 'patientHCTA', placeholder: 'Patient HCT (0-1)' },

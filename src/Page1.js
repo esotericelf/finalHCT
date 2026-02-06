@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import UserForm from './UserForm';
 import FormulaDisplay from './FormulaDisplay';
@@ -7,6 +7,7 @@ import './App.css';
 
 function Page1() {
   const navigate = useNavigate();
+  const [formData, setFormData] = useState(null);
 
   // Function to calculate body weight constant based on body weight
   const calculateBodyWeightConstant = (bodyWeight) => {
@@ -94,10 +95,31 @@ function Page1() {
         }}
         resultLabel="Final HCT"
         resultFormat="percentage"
+        onResultChange={(result, values) => {
+          // Store the calculation result and form values
+          const data = {
+            bw: values.bw || '',
+            patientHCT: values.patientHCT || '',
+            emv: values.emv || '',
+            bwCst: values.bwCst || '',
+            finalHCT: result
+          };
+          setFormData(data);
+          // Also store in localStorage as backup
+          localStorage.setItem('page1CalculationData', JSON.stringify(data));
+        }}
       />
       <div className="navigation-buttons">
-        <button onClick={() => navigate('/donor-blood-volume')} className="nav-btn next-btn">
-          Donar Blood Volume Calculations →
+        <button
+          onClick={() => {
+            // Pass form data via navigation state
+            navigate('/donor-blood-volume', {
+              state: formData || JSON.parse(localStorage.getItem('page1CalculationData') || 'null')
+            });
+          }}
+          className="nav-btn next-btn"
+        >
+          Donor Blood Volume Calculations →
         </button>
       </div>
       <MedicalDisclaimer />

@@ -1,16 +1,78 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import AlertBox from './AlertBox';
 import './App.css';
 
-function UserForm({ title, inputs, calculateSum, resultLabel, autoCalculate, resultFormat, resultUnit, initialValues = {} }) {
+function UserForm({ title, inputs, calculateSum, resultLabel, autoCalculate, resultFormat, resultUnit, initialValues = {}, onResultChange }) {
     const [values, setValues] = useState(() => {
         // Initialize with initialValues if provided
-        return initialValues || {};
+        const init = {};
+        inputs.forEach(input => {
+            if (initialValues && initialValues[input.name] !== undefined && initialValues[input.name] !== null && initialValues[input.name] !== '') {
+                init[input.name] = initialValues[input.name];
+            } else {
+                // Default HCT of Donor to 0.5
+                if (input.name === 'donorHCTA') {
+                    init[input.name] = '0.5';
+                } else {
+                    init[input.name] = '';
+                }
+            }
+        });
+        return init;
     });
     const [result, setResult] = useState(0);
     const [manualOverrides, setManualOverrides] = useState({});
     const [alert, setAlert] = useState({ isOpen: false, message: '', title: '' });
     const [hoveredField, setHoveredField] = useState(null);
+    const finalHCTARef = useRef(null);
+
+    // Update values when initialValues change (e.g., when navigating with data)
+    useEffect(() => {
+        setValues(prevValues => {
+            const updated = { ...prevValues };
+            // Ensure all input fields exist in state
+            inputs.forEach(input => {
+                if (updated[input.name] === undefined) {
+                    // Default HCT of Donor to 0.5
+                    if (input.name === 'donorHCTA') {
+                        updated[input.name] = '0.5';
+                    } else {
+                        updated[input.name] = '';
+                    }
+                }
+            });
+
+            // Update from initialValues if provided
+            if (initialValues && Object.keys(initialValues).length > 0) {
+                Object.keys(initialValues).forEach(key => {
+                    const inputExists = inputs.some(input => input.name === key);
+                    if (inputExists && initialValues[key] !== undefined && initialValues[key] !== null && initialValues[key] !== '') {
+                        updated[key] = initialValues[key];
+                    }
+                });
+            }
+
+            // Ensure donorHCTA always has a default value if empty
+            const donorHCTAInput = inputs.find(input => input.name === 'donorHCTA');
+            if (donorHCTAInput && (!updated.donorHCTA || updated.donorHCTA === '')) {
+                updated.donorHCTA = '0.5';
+            }
+
+            return updated;
+        });
+    }, [JSON.stringify(initialValues)]);
+
+    // Auto-focus on finalHCTA field on first load (Page2)
+    useEffect(() => {
+        const finalHCTAInput = inputs.find(input => input.name === 'finalHCTA');
+        if (finalHCTAInput && finalHCTARef.current) {
+            // Small delay to ensure the DOM is ready
+            const timer = setTimeout(() => {
+                finalHCTARef.current?.focus();
+            }, 100);
+            return () => clearTimeout(timer);
+        }
+    }, []); // Only run once on mount
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -87,11 +149,24 @@ function UserForm({ title, inputs, calculateSum, resultLabel, autoCalculate, res
             showAlert('Invalid Input', 'Please check that all required fields are filled with valid numbers.');
         } else {
             setResult(sumValue);
+            // Notify parent component of the result and current values
+            if (onResultChange) {
+                onResultChange(sumValue, values);
+            }
         }
     };
 
     const handleClear = () => {
-        setValues({});
+        const clearedValues = {};
+        // Set donorHCTA to default 0.5 when clearing
+        inputs.forEach(input => {
+            if (input.name === 'donorHCTA') {
+                clearedValues[input.name] = '0.5';
+            } else {
+                clearedValues[input.name] = '';
+            }
+        });
+        setValues(clearedValues);
         setResult(0);
         setManualOverrides({});
     };
@@ -207,6 +282,7 @@ function UserForm({ title, inputs, calculateSum, resultLabel, autoCalculate, res
                         >
                             <label className="input-label">
                                 <input
+                                    ref={input.name === 'finalHCTA' ? finalHCTARef : null}
                                     type="number"
                                     name={input.name}
                                     value={values[input.name] || ''}
