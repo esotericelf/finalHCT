@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import AlertBox from './AlertBox';
 import './App.css';
 
@@ -25,9 +25,21 @@ function UserForm({ title, inputs, calculateSum, resultLabel, autoCalculate, res
     const [alert, setAlert] = useState({ isOpen: false, message: '', title: '' });
     const [hoveredField, setHoveredField] = useState(null);
     const finalHCTARef = useRef(null);
+    const prevInitialValuesRef = useRef(null);
+
+    // Serialize initialValues for dependency comparison
+    const initialValuesSerialized = useMemo(() => {
+        return JSON.stringify(initialValues);
+    }, [initialValues]);
 
     // Update values when initialValues change (e.g., when navigating with data)
     useEffect(() => {
+        // Only update if initialValues actually changed
+        if (prevInitialValuesRef.current === initialValuesSerialized) {
+            return;
+        }
+        prevInitialValuesRef.current = initialValuesSerialized;
+
         setValues(prevValues => {
             const updated = { ...prevValues };
             // Ensure all input fields exist in state
@@ -60,19 +72,24 @@ function UserForm({ title, inputs, calculateSum, resultLabel, autoCalculate, res
 
             return updated;
         });
-    }, [JSON.stringify(initialValues)]);
+    }, [initialValuesSerialized, initialValues, inputs]);
 
     // Auto-focus on finalHCTA field on first load (Page2)
+    const hasFocusedRef = useRef(false);
     useEffect(() => {
+        if (hasFocusedRef.current) return;
         const finalHCTAInput = inputs.find(input => input.name === 'finalHCTA');
         if (finalHCTAInput && finalHCTARef.current) {
             // Small delay to ensure the DOM is ready
             const timer = setTimeout(() => {
-                finalHCTARef.current?.focus();
+                if (finalHCTARef.current) {
+                    finalHCTARef.current.focus();
+                    hasFocusedRef.current = true;
+                }
             }, 100);
             return () => clearTimeout(timer);
         }
-    }, []); // Only run once on mount
+    }, [inputs]);
 
     const handleChange = (event) => {
         const { name, value } = event.target;
